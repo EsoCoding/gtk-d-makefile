@@ -1,10 +1,10 @@
 # GTK_D
 
-**GTK_D is unofficial fork of [GtkD](https://gtkd.org/) with some features**
+**Gtk-d is unofficial [GtkD](https://gtkd.org/) version with some features**
 
 ## Description
 
-GTK_D is a DLang wrapper for Gtk+ and some other Gtk libs like Adwaita, Shumate. 
+Gtk-d is a DLang wrapper for Gtk+ and some other Gtk libs like Adwaita, Shumate. 
 You can use all libraries together or take one you need thanks DUB submodules
 
 | Library  | Submodule name | Description |
@@ -27,6 +27,19 @@ You can use all libraries together or take one you need thanks DUB submodules
 | libsoup | soup | libsoup is an HTTP client/server library for GNOME |
 | libshumate | shumate | libshumate is a C library providing a GtkWidget to display maps |
 
+## Install 
+In order to be able to generate gtkd, its neccesarly to have the GIR files for the packages included in this unofficial version of Gtk-d
+You can get them by installing the dev version of all the packages. To install chose between make generate-runtime or generate-compiletime 
+by typing simply.
+
+````
+make generate-runtime
+````
+or
+````
+make generate-compiletime
+````
+
 ## Additional info
 
 To generate code from GIR use this gir-to-d fork : https://github.com/KonstantIMP/gir-to-d
@@ -34,8 +47,9 @@ To generate code from GIR use this gir-to-d fork : https://github.com/KonstantIM
 # Clone and build
 git clone https://github.com/KonstantIMP/gir-to-d.git
 cd gir-to-d
-meson builddir
-ninja -C builddir
+meson setup builddir
+meson compile and or install
+
 
 # Generate for dynamic linking
 girtod --use-runtime-linker -i source/ -o source/generated
@@ -48,4 +62,4 @@ girtod -i source/ -o source/generated
 You can get required dll form MSYS2 project`s repo :)
 
 # LICENSE
-GTK_D and gtkD use LGPLv3 license
+Gtkd and gtkD use LGPLv3 license
