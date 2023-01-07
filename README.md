@@ -28,9 +28,7 @@ You can use all libraries together or take one you need thanks DUB submodules
 | libshumate | shumate | libshumate is a C library providing a GtkWidget to display maps |
 
 ## Install 
-In order to be able to generate gtkd, its neccesarly to have the GIR files for the packages included in this unofficial version of Gtk-d
-You can get them by installing the dev version of all the packages. To install chose between make generate-runtime or generate-compiletime 
-by typing simply.
+At this moment this version only allows to do a system install using a makefile. So there is not yet support for dub and meson, tough this will soon be implemented. In order to be able to generate and install Gtk-d, its neccesarly to have the GIR files for the Library's included in this unofficial version of Gtk-d. You can get them by installing the dev version of all the packages. To install chose between make generate-runtime or generate-compiletime by simply typing:
 
 ````
 make generate-runtime
