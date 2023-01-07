@@ -36,6 +36,10 @@ for static library'ś type
 ````
 make static-lib
 ````
+And to finalize the install and copy the files to the system:
+````
+make install
+````
 
 ## Additional info
 
