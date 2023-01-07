@@ -153,7 +153,7 @@ $(DDOC_PATH)$(PATH_SEP)%.html : %.d
 	$(DC) $(DCFLAGS) $(DCFLAGS_LINK) $(DCFLAGS_IMPORT) -c $(NO_OBJ) $(DDOC_FLAGS) $< $(DF)$@
 
 ############# CLEAN #############
-clean: clean-objects clean-static-lib clean-doc clean-header clean-pkgfile
+clean: clean-objects clean-static-lib clean-doc clean-header clean-pkgfile clean-generated
 	@echo ------------------ Cleaning $^ done
 
 clean-shared: clean-shared-objects clean-shared-lib
@@ -198,6 +198,10 @@ clean-geany-tag:
 clean-pkgfile:
 	$(RM) $(PKG_CONFIG_FILE)
 	@echo ------------------ Cleaning pkgfile done
+
+clean-generated:
+	$(RM) $(GENERATED_PATH)$(PATH_SEP)*
+	@echo ------------------ Cleaning gtkd done
 
 ############# INSTALL #############
 

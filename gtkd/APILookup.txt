@@ -74,8 +74,8 @@ lookup: APILookupAdw.txt
 lookup: APILookupSourceView.txt
 lookup: APILookupSoup.txt
 lookup: APILookupShumate.txt
-#lookup: APILookupGStreamer.txt
-#lookup: APILookupGstInterfaces.txt
-#lookup: APILookupGstApp.txt
-#lookup: APILookupGstBase.txt
-#lookup: APILookupGstMpegts.txt
+lookup: APILookupGStreamer.txt
+lookup: APILookupGstInterfaces.txt
+lookup: APILookupGstApp.txt
+lookup: APILookupGstBase.txt
+lookup: APILookupGstMpegts.txt

@@ -269,6 +269,7 @@ DLIB_PATH           = ./lib
 IMPORT_PATH         = ./import
 DOC_PATH            = ./doc
 DDOC_PATH           = ./ddoc
+GENERATED_PATH      = ./generated
 BUILD_PATH          = ./build
 
 DCFLAGS_IMPORT      =
