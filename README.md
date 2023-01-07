@@ -4,8 +4,8 @@
 
 ## Description
 
-This Gtk-d is a DLang wrapper for Gtk-4 version and some other Gtk libs like Adwaita, Shumate, Gstreamer. 
-You can use all libraries together or take one you need thanks DUB submodules
+This is another Gtk-d which is a mix of [Gtk_D](https://github.com/KonstantIMP/gtk_d) and is a DLang wrapper for the Gtk-4 versions and some other Gtk libs like Adwaita, Shumate, Gstreamer. 
+
 
 | Library  | Submodule name | Description |
 | :------- | :------------- | :---------- |
