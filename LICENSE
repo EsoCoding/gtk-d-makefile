@@ -1,0 +1,21 @@
+The GtkD library and included works are provided under the terms of the
+GNU Library General Public License (LGPL) version 3, or (at your option)
+any later version, with the following exceptions:
+
+1. Modifications to any of the works included within the GtkD library to support a specific 
+platform or application do not constitute a modified or derivative work.
+
+2. Static linking of applications or any other source to the GtkD library does not constitute a 
+modified or derivative work and does not require the author(s) to provide source code for said 
+work, use the shared GtkD libraries, or link their applications against a user-supplied version 
+of GtkD. If you link applications to a modified version of GtkD, then the changes to GtkD must be 
+provided under the terms of the LGPL.
+
+3. You do not have to provide a copy of the GtkD license with applications that are linked to the 
+GtkD library, nor do you have to identify GtkD's license in your application as required by the 
+LGPL. However, applications must still identify their use of GtkD. The following example statement 
+can be included in the application or it's documentation to satisfy this requirement:
+
+[application] is based in part on works of the GtkD project (http://gtkd.org).
+
+The above exceptions are temporary and are subject to change at any time.
