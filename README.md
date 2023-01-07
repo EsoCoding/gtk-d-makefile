@@ -32,7 +32,7 @@ At this moment only system install is supoorted which will be installed using a 
 ````
 make shared-lib
 ````
-for static libraryś type
+for static library'ś type
 ````
 make static-lib
 ````
