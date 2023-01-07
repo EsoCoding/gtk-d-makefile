@@ -28,33 +28,26 @@ This is another Gtk-d which is a mix of [Gtk_D](https://github.com/KonstantIMP/g
 | libshumate | shumate | libshumate is a C library providing a GtkWidget to display maps |
 
 ## Install 
-At this moment this version only allows to do a system install using a makefile. So there is not yet support for dub and meson, tough this will soon be implemented. In order to be able to generate and install Gtk-d, its neccesarly to have the GIR files for the Library's included in this unofficial version of Gtk-d. You can get them by installing the dev version of all the packages. To install chose between make generate-runtime or generate-compiletime by simply typing:
-
+At this moment only system install is supoorted which will be installed using a makefile. So there is not yet support for dub and meson, tough this will soon be implemented. In order to be able to generate and install Gtk-d, its neccesarly to have the GIR files for the Library's. You can get them by installing the dev version of all the packages. For shared library simply use the usual:
 ````
-make generate-runtime
+make shared-lib
 ````
-or
+for static libraryś type
 ````
-make generate-compiletime
+make static-lib
 ````
 
 ## Additional info
 
-To generate code from GIR use this gir-to-d fork : https://github.com/KonstantIMP/gir-to-d
-```bash
-# Clone and build
-git clone https://github.com/KonstantIMP/gir-to-d.git
-cd gir-to-d
-meson setup builddir
-meson compile and or install
+I have included gir-to-d in compile process. To Link the gtk functions with the runtime linker use and generate files for shared-lib:
+````
+make generate-runtime using linker
+````
+and for static files choose:
+````
+make generate-compiletime
+````
 
-
-# Generate for dynamic linking
-girtod --use-runtime-linker -i source/ -o source/generated
-
-# Generate for static linking
-girtod -i source/ -o source/generated
-```
 
 ### Windows libraries
 You can get required dll form MSYS2 project`s repo :)
