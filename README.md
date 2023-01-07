@@ -4,7 +4,7 @@
 
 ## Description
 
-Gtk-d is a DLang wrapper for Gtk+ and some other Gtk libs like Adwaita, Shumate. 
+This Gtk-d is a DLang wrapper for Gtk-4 version and some other Gtk libs like Adwaita, Shumate, Gstreamer. 
 You can use all libraries together or take one you need thanks DUB submodules
 
 | Library  | Submodule name | Description |
