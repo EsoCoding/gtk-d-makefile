@@ -1,4 +1,4 @@
-# GTK_D
+# Gtk-d
 
 **Gtk-d is unofficial [GtkD](https://gtkd.org/) version with some features**
 
