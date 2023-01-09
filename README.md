@@ -7,11 +7,11 @@
 This is another Gtk-d version for Gtk-4 and some other Gtk libs like Adwaita, Shumate, Gstreamer. I am planning to add some more library's and add some extra options like a extending templates. If you want to contribute, help, support or if you just want discuss and talk about Gtk-d related subjects, please join us at [matrix](https://matrix.to/#/#gtk-d:matrix.org) gtk-d channel.
 
 ## TODO
-#### Creating a meson.build file for Gtk-d
-#### Creating more example code on how to use Gtk-d
-#### Adding more Gtk4 library's
-#### Creating composite templates
-#### Going to try to add D + gtk-d to Builder
+###### Creating a meson.build file for Gtk-d
+###### Creating more example code on how to use Gtk-d
+###### Adding more Gtk4 library's
+###### Creating composite templates
+###### Going to try to add D + gtk-d to Builder
 
 | Library  | Submodule name | Description |
 | :------- | :------------- | :---------- |
