@@ -4,7 +4,7 @@
 
 ## Description
 
-This is another Gtk-d version for Gtk-4 and some other Gtk libs like Adwaita, Shumate, Gstreamer. I am planning to add some more library's and add some extra options like a extending templates. If you need help you or if you want discuss, talk, support please join us at https://matrix.to/#/#gtk-d:matrix.org
+This is another Gtk-d version for Gtk-4 and some other Gtk libs like Adwaita, Shumate, Gstreamer. I am planning to add some more library's and add some extra options like a extending templates. If you need help you or if you want discuss, talk, support please join us at [matrix](https://matrix.to/#/#gtk-d:matrix.org) gtk-d channel.
 
 
 | Library  | Submodule name | Description |
