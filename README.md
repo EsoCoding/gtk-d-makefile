@@ -1,4 +1,4 @@
-# Gtk-d
+# Gtk-d - D language wrapper for Gtk-4
 
 **Gtk-d is unofficial mix of [Gtk_D](https://github.com/KonstantIMP/gtk_d) and [GtkD](https://gtkd.org/) version with some extra features**
 
