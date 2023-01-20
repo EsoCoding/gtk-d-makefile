@@ -1,11 +1,10 @@
-# Gtk-d
-D language wrapper for Gtk-4
+# GTK-D
 
-**Gtk-d is unofficial mix of [Gtk_D](https://github.com/KonstantIMP/gtk_d) and [GtkD](https://gtkd.org/) version with some extra features**
+#### GTK-d is the continuation of [GtkD](https://gtkd.org/) which no longer seems to be under active development. ####
 
-#### Description
+## Description
 
-This is another Gtk-d version for Gtk-4 and some other Gtk libs like Adwaita, Shumate, Gstreamer. I am planning to add some more library's and add some extra options like a extending templates. If you want to contribute, help, support or if you just want discuss and talk about Gtk-d related subjects, please join us at irc/matrix [matrix](https://matrix.to/#/#gtkd:matrix.org) gtk-d channel.
+GTK-d is a DLang wrapper for Gtk-4 and some other Gtk library's like Adwaita, Shumate. You can use all libraries together or take one you need thanks to DUB submodules.
 
 #### TODO
 1. Creating a meson.build file for Gtk-d
