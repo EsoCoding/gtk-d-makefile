@@ -4,7 +4,9 @@
 
 ## Description
 
-GTK-d is a DLang wrapper for Gtk-4 and some other Gtk library's like Adwaita, Shumate. You can use all libraries together or take one you need thanks to DUB submodules.
+GTK-d is a DLang wrapper for Gtk-4 and some other Gtk library's like Adwaita, Shumate. You can use all libraries together or take one you need thanks to DUB submodules. Gtk-d is release on the LGPL license with additional exceptions.
+
+Please view COPYING for GtkD's license.
 
 #### TODO
 1. Creating a meson.build file for Gtk-d
