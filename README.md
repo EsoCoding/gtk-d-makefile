@@ -4,16 +4,13 @@
 
 ## Description
 
-GTK-d is a DLang wrapper for Gtk-4 and some other Gtk library's like Adwaita, Shumate. You can use all libraries together or take one you need thanks to DUB submodules. Gtk-d is release on the LGPL license with additional exceptions.
+GTK-d is a DLang wrapper for Gtk-4 and some other Gtk library's like Adwaita, Shumate. You can use all libraries together or take one you need thanks to DUB submodules.
 
-Please view COPYING for GtkD's license.
+## Contributing
+Anyone is free to help and contribute wether this is trough posting issues, adding examples, adding library's or perhaps you have published some helpfull tutorials, please feel free to commit and support the progress in anyway you can. If you want to make contact, you can send me a email at info@gtk-d.com or find me in [gtk-d](https://matrix.to/#/#gtkd:matrix.org) channel of the matrix chat server.
 
-#### TODO
-1. Creating a meson.build file for Gtk-d
-2. Creating more example code on how to use Gtk-d
-3. Adding more Gtk4 library's
-4. Creating composite templates
-5. ###### Going to try to add D + gtk-d to Builder
+## Installation
+At the moment you can use dub to install and build the repository and for those who prefer to install gtk-d to their system instead of the .dub folder, there is a another gtk-d repo that has a makefile that generaties pkg-config and installs gtk-d to the folders you would normally install programs to.
 
 | Library  | Submodule name | Description |
 | :------- | :------------- | :---------- |
@@ -51,9 +48,15 @@ make install
 
 ## Additional info
 
-I have included gir-to-d in compile process. To Link the gtk functions with the runtime linker use and generate files for shared-lib:
+To generate your own gtk bindings you need to install gir-to-d, 
+To genereate static linking you have to install gir-to-d and run 
 ````
-make generate-runtime using linker
+girtod --use-runtime-linker -i sources/ -o generated
+````
+Or for shared linking
+````
+girtod -i sources/ -o generated
+
 ````
 and for static files choose:
 ````

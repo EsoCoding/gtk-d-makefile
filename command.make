@@ -6,7 +6,12 @@ ifdef SystemRoot
     message         = @(echo $1)
     SHELL           = cmd.exe
     Filter          = %/linux/%.d %/darwin/%.d %/freebsd/%.d %/solaris/%.d
-    getSource       =$(shell dir $(ROOT_SOURCE_DIR) /s /b)
+    
+    ifeq "$(wildcard $(ROOT_SOURCE_DIR) )" ""
+        -mkdir \$(ROOT_SOURCE_DIR)
+    endif
+    
+    getSource       = $(shell dir $(ROOT_SOURCE_DIR) /s /b)
 else ifneq (,$(findstring /mingw/,$PATH))
     OS              = "MinGW"
     STATIC_LIB_EXT  = .lib
@@ -15,10 +20,21 @@ else ifneq (,$(findstring /mingw/,$PATH))
     message         = @(echo $1)
     SHELL           = cmd.exe
     Filter          = %/linux/%.d %/darwin/%.d %/freebsd/%.d %/solaris/%.d
+    
+    ifeq "$(wildcard $(ROOT_SOURCE_DIR) )" ""
+        -mkdir \$(ROOT_SOURCE_DIR)
+    endif
+    
     getSource       =$(shell dir $(ROOT_SOURCE_DIR) /s /b)
 else
     SHELL           = sh
     PATH_SEP        =/
+    
+    ifeq "$(wildcard $(ROOT_SOURCE_DIR) )" ""
+        $(shell mkdir -p $(ROOT_SOURCE_DIR))
+    endif
+
+    
     getSource       =$(shell find $(ROOT_SOURCE_DIR) -name "*.d")
     ifneq (,$(findstring /cygdrive/,$PATH))
         OS              = "Cygwin"
@@ -269,7 +285,7 @@ DLIB_PATH           = ./lib
 IMPORT_PATH         = ./import
 DOC_PATH            = ./doc
 DDOC_PATH           = ./ddoc
-GENERATED_PATH      = ./generated
+GENERATED_PATH      = ./src
 BUILD_PATH          = ./build
 
 DCFLAGS_IMPORT      =
@@ -284,6 +300,7 @@ MAKE                = make
 AR                  = ar
 ARFLAGS             = rcs
 RANLIB              = ranlib
+MAKEFLAG	    = --jobs=1
 
 export AR
 export ARCH

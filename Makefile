@@ -2,14 +2,14 @@
 export PROJECT_NAME     = gtk-d
 export AUTHOR           = Gert-jan Poortman
 export DESCRIPTION      = Dlang bindings for gtk4
-export REPO_SRC_DIR     = gtkd
-export LOGO_SRC         = 
+export REPO_SRC_DIR     = gtk-d
+export LOGO_SRC         = ./logo.png
 export MAJOR_VERSION    = 1
 export MINOR_VERSION    = 0
 export PATCH_VERSION    = 0
 export PROJECT_VERSION  = $(MAJOR_VERSION).$(MINOR_VERSION).$(PATCH_VERSION)
 export LICENSE          = LICENSE
-export ROOT_SOURCE_DIR  = generated
+export ROOT_SOURCE_DIR  = ./generated
 DDOCFILES               = modules.ddoc settings.ddoc cutedoc.ddoc
 
 # include some command
@@ -35,30 +35,26 @@ define make-lib
 endef
 
 ############# BUILD #############
-all: generate-runtime static-lib header doc pkgfile-static
-	@echo ------------------ Building $^ done
-all-shared: generate-compiletime shared-lib header doc pkgfile-shared
+all: generated-runtime static-lib header doc pkgfile-static
 	@echo ------------------ Building $^ done
 
+all-shared: generate-compiletime shared-lib header doc pkgfile-shared
+	@echo ------------------ Building $^ done
+	
 .PHONY : pkgfile
 .PHONY : doc
 .PHONY : ddoc
 .PHONY : clean
-.PHONY : generate
-.PHONY : generate-runtime
-.PHONY : generate-compiletime
-
-generate: generate-runtime
-
-generate-runtime:
-	girtod --use-runtime-linker -i gtkd/ -o generated/
-
-generate-compiletime:
-	girtod -i gtkd/ -o generated/
 
 static-lib: $(STATIC_LIBNAME)
-
+	
 shared-lib: $(SHARED_LIBNAME)
+
+.PHONY : generated
+generated-runtime:  $(REPO_SRC_DIR) $(ROOT_SOURCE_DIR) $(PATH_SEP)
+	girtod -i $(REPO_SRC_DIR)$(PATH_SEP) -o $(ROOT_SOURCE_DIR)$(PATH_SEP)
+generated-compiletime: $(REPO_SRC_DIR) $(ROOT_SOURCE_DIR) $(PATH_SEP)
+	girtod --use-runtime-linker -i $(REPO_SRC_DIR)$(PATH_SEP) -o $(ROOT_SOURCE_DIR)$(PATH_SEP)
 
 header: $(HEADERS)
 
@@ -200,8 +196,8 @@ clean-pkgfile:
 	@echo ------------------ Cleaning pkgfile done
 
 clean-generated:
-	$(RM) $(GENERATED_PATH)$(PATH_SEP)*
-	@echo ------------------ Cleaning gtkd done
+	$(RM) $(GENERATED_PATH)$(PATH_SEP)
+	@echo ------------------ Cleaning gtk-d done
 
 ############# INSTALL #############
 
