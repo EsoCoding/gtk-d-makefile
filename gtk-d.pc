@@ -1,0 +1,16 @@
+# Package Information for pkg-config
+# Author: Gert-jan Poortman
+# Created: do  2 feb 2023  1:57:08 CET
+# Licence: LICENSE
+
+prefix=/usr/local
+exec_prefix=/usr/local
+libdir=/usr/local/lib
+includedir=/usr/local/include/d/
+
+Name: gtk-d
+Description: Dlang bindings for gtk4
+Version: 1.0.0
+Libs: /usr/local/lib/libgtk-d-dmd.a
+Cflags: -I/usr/local/include/d//gtk-d -m64
+

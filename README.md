@@ -9,8 +9,6 @@ GTK-d is a DLang wrapper for Gtk-4 and some other Gtk library's like Adwaita, Sh
 ## Contributing
 Anyone is free to help and contribute wether this is trough posting issues, adding examples, adding library's or perhaps you have published some helpfull tutorials, please feel free to commit and support the progress in anyway you can. If you want to make contact, you can send me a email at info@gtk-d.com or find me in [gtk-d](https://matrix.to/#/#gtkd:matrix.org) channel of the matrix chat server.
 
-## Installation
-At the moment you can use dub to install and build the repository and for those who prefer to install gtk-d to their system instead of the .dub folder, there is a another gtk-d repo that has a makefile that generaties pkg-config and installs gtk-d to the folders you would normally install programs to.
 
 | Library  | Submodule name | Description |
 | :------- | :------------- | :---------- |
@@ -33,16 +31,16 @@ At the moment you can use dub to install and build the repository and for those 
 | libshumate | shumate | libshumate is a C library providing a GtkWidget to display maps |
 
 ## Install 
-At this moment only system install is supoorted which will be installed using a makefile. So there is not yet support for dub and meson, tough this will soon be implemented. In order to be able to generate and install Gtk-d, its neccesarly to have the GIR files for the Library's. You can get them by installing the dev version of all the packages. For shared library simply use the usual:
+This Gtk-d version is for those who want to install this project to a linux distro. This makefile is a tempory solution to install the complete [Gtk-d](http://www.github.com/gtk-d/gtk-d) package to the system. To install this to your system, you need to install all the required dev version of the GObject packages that are included into Gtk-d.
+
+You can install the project as you usually do with any other makefile project. The default will make command will install static library using the 'all' targer.
 ````
-make shared-lib
+make
+make install
 ````
-for static library'ś type
+If you want to compile and install the shared Library use:
 ````
-make static-lib
-````
-And to finalize the install and copy the files to the system:
-````
+make shared-all
 make install
 ````
 
