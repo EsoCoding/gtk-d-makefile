@@ -78,5 +78,5 @@ I have not tested this install on any other system then Ubuntu 22.10. If you did
 ### Windows libraries
 Cant tell if this makefile will run on windows, tough according to makefile template i used it should. If you try need the required dll form in MSYS2 project`s repo :)
 
-# LICENSE
+### LICENSE
 Gtkd and gtkD use LGPLv3 license
