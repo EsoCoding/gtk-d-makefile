@@ -1,59 +1,90 @@
-# defines for command command line usage
-SHELL           = sh
-PATH_SEP        =/
-RM    = rm -fr
-CP    = cp -fr
-MKDIR = mkdir -p
-MV    = mv
-LN    = ln -s
-
-# Define var PREFIX, BIN_DIR, LIB_DIR, INCLUDE_DIR, DATA_DIR
-PREFIX = /usr/local
-BIN_DIR = $(PREFIX)/bin
-LIB_DIR = $(PREFIX)/lib
-INCLUDE_DIR = $(PREFIX)/include/d
-HEADERS_DIR = $(INCLUDE_DIR)/$(PROJECT_NAME)
-DATA_DIR = $(PREFIX)/share
-PKGCONFIG_DIR = $(DATA_DIR)/pkgconfig
-
-# Some defines for Library's
-STATIC_LIBNAME      = lib$(PROJECT_NAME)-$(COMPILER)$(STATIC_LIB_EXT)
-SHARED_LIBNAME      = lib$(PROJECT_NAME)-$(COMPILER)$(DYNAMIC_LIB_EXT)
-STATIC_LIB_EXT  = .a
-DYNAMIC_LIB_EXT = .so
-message         = @(echo \033[31m $1 \033[0;0m1)
-
-# folders names for lib, import build
-DLIB_PATH           = lib
-IMPORT_PATH         = import
-BUILD_PATH          = build
-GENERATED_PATH      = generated
- 
-
-
-# DCFLAGS and DCFLINK defines
-DCFLAGS_IMPORT      =
-DCFLAGS_LINK        = $(LDCFLAGS)
-
-#pkg config file define
-PKG_CONFIG_FILE     = $(PROJECT_NAME).pc
-
-#defines for some needed linux utility's
-MAKE                = make
-AR                  = ar
-ARFLAGS             = rcs
-RANLIB              = ranlib
-
-# arch will be looked up automaticly
-ARCH = $(shell arch 2>/dev/null|| uname -m)
-
-# create the root source folder if it not exists.
-ifeq "$(wildcard $(ROOT_SOURCE_DIR) )" ""
-    $(shell mkdir -p $(ROOT_SOURCE_DIR))
+ifdef SystemRoot
+    OS              = "Windows"
+    STATIC_LIB_EXT  = .lib
+    DYNAMIC_LIB_EXT = .dll
+    PATH_SEP        =\
+    message         = @(echo $1)
+    SHELL           = cmd.exe
+    Filter          = %/linux/%.d %/darwin/%.d %/freebsd/%.d %/solaris/%.d
+    getSource       =$(shell dir $(ROOT_SOURCE_DIR) /s /b)
+else ifneq (,$(findstring /mingw/,$PATH))
+    OS              = "MinGW"
+    STATIC_LIB_EXT  = .lib
+    DYNAMIC_LIB_EXT = .dll
+    PATH_SEP        =\
+    message         = @(echo $1)
+    SHELL           = cmd.exe
+    Filter          = %/linux/%.d %/darwin/%.d %/freebsd/%.d %/solaris/%.d
+    getSource       =$(shell dir $(ROOT_SOURCE_DIR) /s /b)
+else
+    SHELL           = sh
+    PATH_SEP        =/
+    getSource       =$(shell find $(ROOT_SOURCE_DIR) -name "*.d")
+    ifneq (,$(findstring /cygdrive/,$PATH))
+        OS              = "Cygwin"
+        STATIC_LIB_EXT  = .a
+        DYNAMIC_LIB_EXT = .so
+        message         = @(echo \033[31m $1 \033[0;0m1)
+        Filter          = %/win32/%.d %/darwin/%.d %/freebsd/%.d %/solaris/%.d
+    else ifeq ($(shell uname), Linux)
+        OS              = "Linux"
+        STATIC_LIB_EXT  = .a
+        DYNAMIC_LIB_EXT = .so
+        message         = @(echo \033[31m $1 \033[0;0m1)
+        Filter          = %/win32/%.d %/darwin/%.d %/freebsd/%.d %/solaris/%.d
+    else ifeq ($(shell uname), Solaris)
+        STATIC_LIB_EXT  = .a
+        DYNAMIC_LIB_EXT = .so
+        OS              = "Solaris"
+        message         = @(echo \033[31m $1 \033[0;0m1)
+        Filter          = %/win32/%.d %/linux/%.d %/darwin/%.d %/freebsd/%.d
+    else ifeq ($(shell uname),Freebsd)
+        STATIC_LIB_EXT  = .a
+        DYNAMIC_LIB_EXT = .so
+        OS              = "Freebsd"
+        message         = @(echo \033[31m $1 \033[0;0m1)
+        Filter          = %/win32/%.d %/linux/%.d %/darwin/%.d %/solaris/%.d
+    else ifeq ($(shell uname),Darwin)
+        STATIC_LIB_EXT  = .a
+        DYNAMIC_LIB_EXT = .so
+        OS              = "Darwin"
+        message         = @(echo \033[31m $1 \033[0;0m1)
+        Filter          = %/win32/%.d %/linux/%.d %/freebsd/%.d %/solaris/%.d
+    endif
 endif
 
-# Get source from root souce folder
-getSource       =$(shell find $(ROOT_SOURCE_DIR) -name "*.d")
+# Define command for copy, remove and create file/dir
+ifeq ($(OS),"Windows")
+    RM    = del /Q
+    CP    = copy /Y
+    MKDIR = mkdir
+    MV    = move
+    LN    = mklink
+else ifeq ($(OS),"Linux")
+    RM    = rm -fr
+    CP    = cp -fr
+    MKDIR = mkdir -p
+    MV    = mv
+    LN    = ln -s
+else ifeq ($(OS),"Freebsd")
+    RM    = rm -fr
+    CP    = cp -fr
+    MKDIR = mkdir -p
+    MV    = mv
+    LN    = ln -s
+else ifeq ($(OS),"Solaris")
+    RM    = rm -fr
+    CP    = cp -fr
+    MKDIR = mkdir -p
+    MV    = mv
+    LN    = ln -s
+else ifeq ($(OS),"Darwin")
+    RM    = rm -fr
+    CP    = cp -fr
+    MKDIR = mkdir -p
+    MV    = mv
+    LN    = ln -s
+endif
 
 # If compiler is not define try to find it
 ifndef DC
@@ -74,7 +105,9 @@ ifeq ($(DC),gdc)
     LINKERFLAG= -Xlinker
     OUTPUT    = -o
     HF        = -fintfc-file=
+    DF        = -fdoc-file=
     NO_OBJ    = -fsyntax-only
+    DDOC_MACRO= -fdoc-inc=
 else
     DCFLAGS    = -O -d
     LINKERFLAG= -L
@@ -82,6 +115,7 @@ else
     HF        = -Hf
     DF        = -Df
     NO_OBJ    = -o-
+    DDOC_MACRO=
 endif
 
 #define a suffix lib who inform is build with which compiler, name of phobos lib
@@ -141,6 +175,18 @@ ifeq ($(OS),"Linux")
     LDCFLAGS += $(LINKERFLAG)-ldl
 endif
 
+# If model are not given take the same as current system
+ifndef ARCH
+    ifeq ($(OS),"Windows")
+        ifeq ($(PROCESSOR_ARCHITECTURE), x86)
+            ARCH = x86
+        else
+            ARCH = x86_64
+        endif
+    else
+        ARCH = $(shell arch 2>/dev/null|| uname -m)
+    endif
+endif
 ifndef MODEL
     ifeq ($(ARCH), x86_64)
         MODEL = 64
@@ -161,9 +207,82 @@ ifndef DESTDIR
     DESTDIR =
 endif
 
+# Define var PREFIX, BIN_DIR, LIB_DIR, INCLUDE_DIR, DATA_DIR
+ifndef PREFIX
+    ifeq ($(OS),"Windows")
+        PREFIX = $(PROGRAMFILES)
+    else ifeq ($(OS), "Linux")
+        PREFIX = /usr/local
+    else ifeq ($(OS), "Darwin")
+        PREFIX = /usr/local
+    endif
+endif
+
+ifndef BIN_DIR
+    ifeq ($(OS), "Windows")
+        BIN_DIR = $(PROGRAMFILES)\$(PROJECT_NAME)\bin
+    else ifeq ($(OS), "Linux")
+        BIN_DIR = $(PREFIX)/bin
+    else ifeq ($(OS), "Darwin")
+        BIN_DIR = $(PREFIX)/bin
+    endif
+endif
+ifndef LIB_DIR
+    ifeq ($(OS), "Windows")
+        LIB_DIR = $(PREFIX)\$(PROJECT_NAME)\lib
+    else ifeq ($(OS), "Linux")
+        LIB_DIR = $(PREFIX)/lib
+    else ifeq ($(OS), "Darwin")
+        LIB_DIR = $(PREFIX)/lib
+    endif
+endif
+
+ifndef INCLUDE_DIR
+    ifeq ($(OS), "Windows")
+        INCLUDE_DIR = $(PROGRAMFILES)\$(PROJECT_NAME)\import
+    else
+        INCLUDE_DIR = $(PREFIX)/include/d
+    endif
+endif
+
+ifndef DATA_DIR
+    ifeq ($(OS), "Windows")
+        DATA_DIR = $(PROGRAMFILES)\$(PROJECT_NAME)\data
+    else
+        DATA_DIR = $(PREFIX)/share
+    endif
+endif
+
+ifndef PKGCONFIG_DIR
+    ifeq ($(OS), "Windows")
+        PKGCONFIG_DIR = $(PROGRAMFILES)\$(PROJECT_NAME)\data
+    else
+        PKGCONFIG_DIR = $(DATA_DIR)/pkgconfig
+    endif
+endif
+
 ifndef CC
     CC = gcc
 endif
+
+DLIB_PATH           = ./lib
+IMPORT_PATH         = ./import
+DOC_PATH            = ./doc
+DDOC_PATH           = ./ddoc
+BUILD_PATH          = ./build
+
+DCFLAGS_IMPORT      =
+DCFLAGS_LINK        = $(LDCFLAGS)
+
+STATIC_LIBNAME      = lib$(PROJECT_NAME)-$(COMPILER)$(STATIC_LIB_EXT)
+SHARED_LIBNAME      = lib$(PROJECT_NAME)-$(COMPILER)$(DYNAMIC_LIB_EXT)
+
+PKG_CONFIG_FILE     = $(PROJECT_NAME).pc
+
+MAKE                = make
+AR                  = ar
+ARFLAGS             = rcs
+RANLIB              = ranlib
 
 export AR
 export ARCH
@@ -181,6 +300,8 @@ export DCFLAGS_IMPORT
 export DCFLAGS_LINK
 export DESTDIR
 export DLIB_PATH
+export DOC_PATH
+export DDOC_PATH
 export DYNAMIC_LIB_EXT
 export FixPath
 export HF

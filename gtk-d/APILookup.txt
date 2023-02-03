@@ -47,7 +47,7 @@ license: start
 license: end
 
 includeComments: y
-outputRoot: generated
+outputRoot: src
 
 ###########################################################
 ### predifined: lib
@@ -92,11 +92,4 @@ lookup: APILookupSourceView.txt
 lookup: APILookupSoup.txt
 
 lookup: APILookupShumate.txt
-
-#srcDir: gstreamer
-#lookup: APILookupGStreamer.txt
-#lookup: APILookupGstInterfaces.txt
-#lookup: APILookupGstApp.txt
-#lookup: APILookupGstBase.txt
-#lookup: APILookupGstMpegts.txt
 
