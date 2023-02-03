@@ -11,10 +11,10 @@ export ROOT_SOURCE_DIR  = src
 
 ############# BUILD #############
 
-all: static-lib header pkgfile-static
+all: shared-lib header pkgfile-static
 	@echo ------------------ Building $^ done
 
-all-shared: shared-lib header pkgfile-shared 
+all-shared: static-lib header pkgfile-shared 
 	@echo ------------------ Building $^ done
 
 # include some command
@@ -180,9 +180,3 @@ uninstall-headers:
 	-
 uninstall-pkgfile:
 	$(RM) $(DESTDIR)$(PKGCONFIG_DIR)/$(PROJECT_NAME).pc
-
-
-
-
-
-	

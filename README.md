@@ -4,7 +4,7 @@
 
 ## Description
 
-GTK-d is a DLang wrapper for Gtk-4 and some other Gtk library's like Adwaita, Shumate. You can use all libraries together or take one you need thanks to DUB submodules.
+GTK-d is a DLang wrapper for Gtk-4 and some other Gtk and GObject library's like Adwaita, Shumate. This version is a tempory solution for being able to install the normal version of [Gtk-d](http://www.github.com/gtk-d/gtk-d) to the system without the need of dub. In the mean while i work on something more sophisticated, but for now this version should do the job. 
 
 ## Contributing
 Anyone is free to help and contribute wether this is trough posting issues, adding examples, adding library's or perhaps you have published some helpfull tutorials, please feel free to commit and support the progress in anyway you can. If you want to make contact, you can send me a email at info@gtk-d.com or find me in [gtk-d](https://matrix.to/#/#gtkd:matrix.org) channel of the matrix chat server.
@@ -30,40 +30,53 @@ Anyone is free to help and contribute wether this is trough posting issues, addi
 | libsoup | soup | libsoup is an HTTP client/server library for GNOME |
 | libshumate | shumate | libshumate is a C library providing a GtkWidget to display maps |
 
-## Install 
-This Gtk-d version is for those who want to install this project to a linux distro. This makefile is a tempory solution to install the complete [Gtk-d](http://www.github.com/gtk-d/gtk-d) package to the system. To install this to your system, you need to install all the required dev version of the GObject packages that are included into Gtk-d.
+## Installation 
+To install gtk-d to your system, you need to install all the required dev version of the GObject packages that are included into Gtk-d. And generate the gir files to d bingings using girtod. See next section.
 
-You can install the project as you usually do with any other makefile project. The default will make command will install static library using the 'all' targer.
+You can install the project as you usually do with any other makefile project. 
 ````
 make
 make install
 ````
+
 If you want to compile and install the shared Library use:
 ````
 make shared-all
 make install
 ````
 
+For cleaning just run:
+````
+make clean
+````
+
+And for uninstalling gtk-d from your system run:
+````
+make uninstall
+````
+
 ## Additional info
 
-To generate your own gtk bindings you need to install gir-to-d, 
-To genereate static linking you have to install gir-to-d and run 
+To generate your own gtk bindings you need to install this version of [girtod](https://github.com/gtk-d/gir-to-d). Just run the makefile, meson or dub install. And then you can start generating the bindings with the following commands:
+
+For static bindings:
 ````
 girtod --use-runtime-linker -i sources/ -o generated
 ````
-Or for shared linking
+for shared bindings:
 ````
 girtod -i sources/ -o generated
-
-````
-and for static files choose:
-````
-make generate-compiletime
 ````
 
+## gir files
+
+In case you need gir files and can't find working ones, this [repo](https://github.com/gtk-d/gir-files) will give you the needed working gir files for gtk 4.8.3.
+
+## Not tested
+I have not tested this install on any other system then Ubuntu 22.10. If you did try to install this gtk-d version to any other system, please let me know if it worked and if not, please post a issue, so i can look into it. I have messed a little with the makefile since the original had bug for which i made temporary solution.
 
 ### Windows libraries
-You can get required dll form MSYS2 project`s repo :)
+Cant tell if this makefile will run on windows, tough according to makefile template i used it should. If you try need the required dll form in MSYS2 project`s repo :)
 
 # LICENSE
 Gtkd and gtkD use LGPLv3 license
