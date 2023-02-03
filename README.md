@@ -4,7 +4,7 @@
 
 ## Description
 
-GTK-d is a DLang wrapper for Gtk-4 and some other Gtk and GObject library's like Adwaita, Shumate. This version is a tempory solution for being able to install the normal version of [Gtk-d](http://www.github.com/gtk-d/gtk-d) to the system without the need of dub. In the mean while i work on something more sophisticated, but for now this version should do the job. 
+[Gtk-d](http://www.github.com/gtk-d/gtk-dhttp://www.github.com/gtk-d/gtk-d) is a dlang wrapper for Gtk4 and other GObject library's like Adwaita, Shumate etc. This version is a tempory solution for being able to install [Gtk-d](http://www.github.com/gtk-d/gtk-d) to your system without the need of dub and will install in the usual folders you may expect on Linux system and will generate pkgfile. In the mean while i work on something more sophisticated, but for now this version should do the job for a regular installation. For install instructions scroll down.
 
 ## Contributing
 Anyone is free to help and contribute wether this is trough posting issues, adding examples, adding library's or perhaps you have published some helpfull tutorials, please feel free to commit and support the progress in anyway you can. If you want to make contact, you can send me a email at info@gtk-d.com or find me in [gtk-d](https://matrix.to/#/#gtkd:matrix.org) channel of the matrix chat server.
