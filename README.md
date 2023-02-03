@@ -61,11 +61,11 @@ To generate your own gtk bindings you need to install this version of [girtod](h
 
 For static bindings:
 ````
-girtod --use-runtime-linker -i sources/ -o generated
+girtod --use-runtime-linker -i gtk-d -o src
 ````
 for shared bindings:
 ````
-girtod -i sources/ -o generated
+girtod -i gtk-d -o src
 ````
 
 ## gir files
