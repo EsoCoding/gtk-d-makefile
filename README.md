@@ -1,10 +1,10 @@
 # GTK-D
 
-#### GTK-d is the continuation of [GtkD](https://gtkd.org/) which no longer seems to be under active development. ####
+#### GTK-d is the continuation of [GtkD](https://gtkd.org/) which no longer seems to be under active development. Because the inactivity on the git of gtkd, it was impossible to merge or continue the official project, which is why i created a new organization and trying to bring in some new energy and ambition and want to compete with other languages like Python, Vala, who did improve and added some extra options, like composite templates ####
 
 ## Description
 
-[Gtk-d](http://www.github.com/gtk-d/gtk-dhttp://www.github.com/gtk-d/gtk-d) is a dlang wrapper for Gtk4 and other GObject library's like Adwaita, Shumate etc. This version is a tempory solution for being able to install [Gtk-d](http://www.github.com/gtk-d/gtk-d) to your system without the need of dub and will install in the usual folders you may expect on Linux system and will generate pkgfile. In the mean while i work on something more sophisticated, but for now this version should do the job for a regular installation. For install instructions scroll down.
+[Gtk-d](http://www.github.com/gtk-d/gtk-dhttp://www.github.com/gtk-d/gtk-d) is a dlang (Digitial Mars D) wrapper for Gtk4 and other GObject library's like Gio, Shumate, Libsoup etc. This version of gtk-d is a tempory solution to make it possible to install [Gtk-d](http://www.github.com/gtk-d/gtk-d) to your system without the need of dub and will install all the files in the usual folders you may expect files to be installed on a Linux system. In the mean while i work on something more sophisticated using meson, but for now this version should do the job for a regular installation. For install instructions scroll down.
 
 ## Contributing
 Anyone is free to help and contribute wether this is trough posting issues, adding examples, adding library's or perhaps you have published some helpfull tutorials, please feel free to commit and support the progress in anyway you can. If you want to make contact, you can send me a email at info@gtk-d.com or find me in [gtk-d](https://matrix.to/#/#gtkd:matrix.org) channel of the matrix chat server.
@@ -31,18 +31,23 @@ Anyone is free to help and contribute wether this is trough posting issues, addi
 | libshumate | shumate | libshumate is a C library providing a GtkWidget to display maps |
 
 ## Installation 
-To install gtk-d to your system, you need to install all the required dev version of the GObject packages that are included into Gtk-d. And generate the gir files to d bingings using girtod. See next section.
+To install gtk-d to your system, you need to install all the packages required dev version of the GObject packages that are included into Gtk-d. These dev versions have the gir files you need to generate the bindings. See next section for a repo with gir files for gtk-4.8.3, which can be used as long the packages are installed on the system.
 
-You can install the project as you usually do with any other makefile project. 
+You can install the project as you usually do with any other makefile project. The default options creates a shared library.
 ````
 make
 make install
 ````
 
-If you want to compile and install the shared Library use:
+If you want to compile and install the static Library dont forget to use the --use-runtime-linker flag when using girtod to generate the bindings.
 ````
-make shared-all
+make static-all
 make install
+````
+
+There is also support for override veriables and install parts to different directorys:
+````
+make install PREFIX=/usr LIB_DIR=/usr/lib64
 ````
 
 For cleaning just run:
@@ -56,7 +61,6 @@ make uninstall
 ````
 
 ## Additional info
-
 To generate your own gtk bindings you need to install this version of [girtod](https://github.com/gtk-d/gir-to-d). Just run the makefile, meson or dub install. And then you can start generating the bindings with the following commands:
 
 For static bindings:
@@ -69,14 +73,13 @@ girtod -i gtk-d -o src
 ````
 
 ## gir files
-
-In case you need gir files and can't find working ones, this [repo](https://github.com/gtk-d/gir-files) will give you the needed working gir files for gtk 4.8.3.
+In case you need gir files and can't find working ones, this [repo](https://github.com/gtk-d/gir-files) will give you working gir files from which girtod can create the bindigns.
 
 ## Not tested
-I have not tested this install on any other system then Ubuntu 22.10. If you did try to install this gtk-d version to any other system, please let me know if it worked and if not, please post a issue, so i can look into it. I have messed a little with the makefile since the original had bug for which i made temporary solution.
+I have not tested this install on any other system then Ubuntu 22.10. If you did try to install this gtk-d version to any other system, please let me know if it worked and if not, then please post a issue, so i can look into it. I have messed a little with the makefile since the original had bug for which i made temporary solution.
 
-### Windows libraries
-Cant tell if this makefile will run on windows, tough according to makefile template i used it should. If you try need the required dll form in MSYS2 project`s repo :)
+## Windows libraries
+Cant tell if this makefile will run on windows, tough according to [MakefileforD](https://github.com/EsoCoding/MakefileForD) template i it should be able to work. I think it requires the [MSYS2](https://github.com/msys2) to make it work, but since i dont use windows. I can't tell for sure.
 
-### LICENSE
+## LICENSE
 Gtkd and gtkD use LGPLv3 license

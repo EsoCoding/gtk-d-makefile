@@ -53,43 +53,43 @@ outputRoot: src
 ### predifined: lib
 ###########################################################
 
-copy: cairo
-copy: gtk
+#copy: cairo
+#copy: gtk
 copy: linker
 
 lookup: APILookupGLib.txt
 
-lookup: APILookupGThread.txt
+#lookup: APILookupGThread.txt
 
 lookup: APILookupGObject.txt
 
-lookup: APILookupGraphene.txt
+#lookup: APILookupGraphene.txt
 
-lookup: APILookupCairo.txt
+#lookup: APILookupCairo.txt
 
-lookup: APILookupHarfBuzz.txt
+#lookup: APILookupHarfBuzz.txt
 
-lookup: APILookupPango.txt
+#lookup: APILookupPango.txt
 
 lookup: APILookupGio.txt
 
-lookup: APILookupGdkPixbuf.txt
+#lookup: APILookupGdkPixbuf.txt
 
-lookup: APILookupGdk.txt
+#lookup: APILookupGdk.txt
 
-lookup: APILookupAtk.txt
+#lookup: APILookupAtk.txt
 
-lookup: APILookupRsvg.txt
+#lookup: APILookupRsvg.txt
 
-lookup: APILookupGsk.txt
+#lookup: APILookupGsk.txt
 
-lookup: APILookupGtk.txt
+#lookup: APILookupGtk.txt
 
-lookup: APILookupAdw.txt
+#lookup: APILookupAdw.txt
 
-lookup: APILookupSourceView.txt
+#lookup: APILookupSourceView.txt
 
-lookup: APILookupSoup.txt
+#lookup: APILookupSoup.txt
 
-lookup: APILookupShumate.txt
+#lookup: APILookupShumate.txt
 

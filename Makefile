@@ -11,16 +11,16 @@ export ROOT_SOURCE_DIR  = src
 
 ############# BUILD #############
 
-all: shared-lib header pkgfile-static
+all: shared-lib header pkgfile-shared
 	@echo ------------------ Building $^ done
 
-all-shared: static-lib header pkgfile-shared 
+all-static: static-lib header pkgfile-static 
 	@echo ------------------ Building $^ done
 
 # include some command
 include command.make
 
-SOURCES            := $(getSource)
+SOURCES            = $(getSource)
 OBJECTS            = $(patsubst %.d,$(BUILD_PATH)/%.o,    $(SOURCES))
 PICOBJECTS         = $(patsubst %.d,$(BUILD_PATH)/%.pic.o,$(SOURCES))
 HEADERS            = $(patsubst %.d,$(IMPORT_PATH)/%.di,  $(SOURCES))
@@ -29,6 +29,11 @@ space :=
 space +=
 
 stripBugfix = $(subst $(space),.,$(strip $(wordlist 1, 2, $(subst ., ,$(1)))))
+
+.PHONY : debug
+
+debug:
+	@echo $(BUILD_PATH)$(PATH_SEP)
 
 define make-lib
 	$(MKDIR) $(DLIB_PATH)
@@ -86,11 +91,11 @@ $(STATIC_LIBNAME): $(OBJECTS)
 	$(make-lib)
 
 # For build shared lib need create shared object files
+# dmd -shared -of./lib/libgtk-d-dmd.so.1.0.0 -L-ldl -defaultlib=libphobos2.so
 $(SHARED_LIBNAME): $(PICOBJECTS)
 	@echo ------------------ Building shared library
 	$(MKDIR) $(DLIB_PATH)
-	$(DC) -shared $(SONAME_FLAG) $@.$(MAJOR_VERSION) $(OUTPUT)$(DLIB_PATH)$(PATH_SEP)$@.$(PROJECT_VERSION) $^
-#$(CC) -l$(PHOBOS) -l$(DRUNTIME) -shared -Wl,-soname,$@.$(MAJOR_VERSION) -o $(DLIB_PATH)$(PATH_SEP)$@.$(PROJECT_VERSION) $^
+	$(DC) -shared -of./lib/libgtk-d-dmd.so.1.0.0 -L-ldl -defaultlib=$(PHOBOS) $^
 
 # create object files
 $(BUILD_PATH)$(PATH_SEP)%.o : %.d
@@ -98,11 +103,12 @@ $(BUILD_PATH)$(PATH_SEP)%.o : %.d
 
 # create shared object files
 $(BUILD_PATH)$(PATH_SEP)%.pic.o : %.d
-	$(DC) $(DCFLAGS) $(DCFLAGS_LINK) $(FPIC) $(DCFLAGS_IMPORT) -c $< $(OUTPUT)$@
+	$(DC) $(DCFLAGS) $(DCFLAGS_LINK) $(FPIC) $(DCFLAGS_IMPORT) -c $< $(OUTPUT)$@ -Lsrc
 
 # Generate Header files
 $(IMPORT_PATH)$(PATH_SEP)%.di : %.d
-	$(DC) $(DCFLAGS) $(DCFLAGS_LINK) $(DCFLAGS_IMPORT) -c $(NO_OBJ) $< $(HF)$@
+	$(DC) $(DCFLAGS) $(DCFLAGS_LINK) $(DCFLAGS_IMPORT) -c $(NO_OBJ) $< $(HF)$@ -Limport/src
+
 
 ############# CLEAN #############
 
@@ -137,10 +143,10 @@ clean-src:
 ############# INSTALL #############
 .PHONY : install
 
-install: install-static-lib install-header install-pkgfile
+install: install-shared-lib install-header install-pkgfile
 	@echo ------------------ Finished installing Gtk-d to the system folders.
 
-install-shared: install-shared-lib install-header install-pkgfile
+install-shared: install-static-lib install-header install-pkgfile
 	@echo ------------------ Finished installing Gtk-d to the system folders.
 
 install-static-lib:
@@ -168,12 +174,18 @@ install-pkgfile:
 #############m UNINSTALL ################
 .PHONY : uninstall
 
-uninstall: uninstall-lib uninstall-headers uninstall-pkgfile
+uninstall: install-shared
 
-uninstall-lib:
-	$(RM) $(DESTDIR)$(LIB_DIR)/$(STATIC_LIBNAME)
+uninstall-shared: uninstall-shared-lib uninstall-headers uninstall-pkgfile
+
+uninstall-static: uninstall-static-lib uninstall-headers uninstall-pkgfile
+
+uninstall-shared-lib:
 	$(RM) $(DESTDIR)$(LIB_DIR)/$(SHARED_LIBNAME).$(PROJECT_VERSION)
 	$(RM) $(DESTDIR)$(LIB_DIR)/$(SHARED_LIBNAME).$(SHARED_LIBNAME).$(MAJOR_VERSION)
+
+uninstall-static-lib:
+	$(RM) $(DESTDIR)$(LIB_DIR)/$(STATIC_LIBNAME)
 
 uninstall-headers:
 	$(RM) $(DESTDIR)$(INCLUDE_DIR)$(PATH_SEP)$(PROJECT_NAME)

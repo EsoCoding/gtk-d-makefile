@@ -1,89 +1,39 @@
-ifdef SystemRoot
-    OS              = "Windows"
-    STATIC_LIB_EXT  = .lib
-    DYNAMIC_LIB_EXT = .dll
-    PATH_SEP        =\
-    message         = @(echo $1)
-    SHELL           = cmd.exe
-    Filter          = %/linux/%.d %/darwin/%.d %/freebsd/%.d %/solaris/%.d
-    getSource       =$(shell dir $(ROOT_SOURCE_DIR) /s /b)
-else ifneq (,$(findstring /mingw/,$PATH))
-    OS              = "MinGW"
-    STATIC_LIB_EXT  = .lib
-    DYNAMIC_LIB_EXT = .dll
-    PATH_SEP        =\
-    message         = @(echo $1)
-    SHELL           = cmd.exe
-    Filter          = %/linux/%.d %/darwin/%.d %/freebsd/%.d %/solaris/%.d
-    getSource       =$(shell dir $(ROOT_SOURCE_DIR) /s /b)
-else
-    SHELL           = sh
-    PATH_SEP        =/
-    getSource       =$(shell find $(ROOT_SOURCE_DIR) -name "*.d")
-    ifneq (,$(findstring /cygdrive/,$PATH))
-        OS              = "Cygwin"
-        STATIC_LIB_EXT  = .a
-        DYNAMIC_LIB_EXT = .so
-        message         = @(echo \033[31m $1 \033[0;0m1)
-        Filter          = %/win32/%.d %/darwin/%.d %/freebsd/%.d %/solaris/%.d
-    else ifeq ($(shell uname), Linux)
-        OS              = "Linux"
-        STATIC_LIB_EXT  = .a
-        DYNAMIC_LIB_EXT = .so
-        message         = @(echo \033[31m $1 \033[0;0m1)
-        Filter          = %/win32/%.d %/darwin/%.d %/freebsd/%.d %/solaris/%.d
-    else ifeq ($(shell uname), Solaris)
-        STATIC_LIB_EXT  = .a
-        DYNAMIC_LIB_EXT = .so
-        OS              = "Solaris"
-        message         = @(echo \033[31m $1 \033[0;0m1)
-        Filter          = %/win32/%.d %/linux/%.d %/darwin/%.d %/freebsd/%.d
-    else ifeq ($(shell uname),Freebsd)
-        STATIC_LIB_EXT  = .a
-        DYNAMIC_LIB_EXT = .so
-        OS              = "Freebsd"
-        message         = @(echo \033[31m $1 \033[0;0m1)
-        Filter          = %/win32/%.d %/linux/%.d %/darwin/%.d %/solaris/%.d
-    else ifeq ($(shell uname),Darwin)
-        STATIC_LIB_EXT  = .a
-        DYNAMIC_LIB_EXT = .so
-        OS              = "Darwin"
-        message         = @(echo \033[31m $1 \033[0;0m1)
-        Filter          = %/win32/%.d %/linux/%.d %/freebsd/%.d %/solaris/%.d
-    endif
-endif
+#### Define shell commands ####
+SHELL           = sh
+PATH_SEP        =/
+RM    = rm -fr
+CP    = cp -fr
+MKDIR = mkdir -p
+MV    = mv
+LN    = ln -s
 
-# Define command for copy, remove and create file/dir
-ifeq ($(OS),"Windows")
-    RM    = del /Q
-    CP    = copy /Y
-    MKDIR = mkdir
-    MV    = move
-    LN    = mklink
-else ifeq ($(OS),"Linux")
-    RM    = rm -fr
-    CP    = cp -fr
-    MKDIR = mkdir -p
-    MV    = mv
-    LN    = ln -s
-else ifeq ($(OS),"Freebsd")
-    RM    = rm -fr
-    CP    = cp -fr
-    MKDIR = mkdir -p
-    MV    = mv
-    LN    = ln -s
-else ifeq ($(OS),"Solaris")
-    RM    = rm -fr
-    CP    = cp -fr
-    MKDIR = mkdir -p
-    MV    = mv
-    LN    = ln -s
-else ifeq ($(OS),"Darwin")
-    RM    = rm -fr
-    CP    = cp -fr
-    MKDIR = mkdir -p
-    MV    = mv
-    LN    = ln -s
+# find all the source code in root directory
+getSource       =$(shell find $(ROOT_SOURCE_DIR) -name "*.d")
+
+ifeq ($(shell uname), Linux)
+    OS              = "Linux"
+    STATIC_LIB_EXT  = .a
+    DYNAMIC_LIB_EXT = .so
+    message         = @(echo \033[31m $1 \033[0;0m1)
+    Filter          = %/win32/%.d %/darwin/%.d %/freebsd/%.d %/solaris/%.d
+else ifeq ($(shell uname), Solaris)
+    STATIC_LIB_EXT  = .a
+    DYNAMIC_LIB_EXT = .so
+    OS              = "Solaris"
+    message         = @(echo \033[31m $1 \033[0;0m1)
+    Filter          = %/win32/%.d %/linux/%.d %/darwin/%.d %/freebsd/%.d
+else ifeq ($(shell uname),Freebsd)
+    STATIC_LIB_EXT  = .a
+    DYNAMIC_LIB_EXT = .so
+    OS              = "Freebsd"
+    message         = @(echo \033[31m $1 \033[0;0m1)
+    Filter          = %/win32/%.d %/linux/%.d %/darwin/%.d %/solaris/%.d
+else ifeq ($(shell uname),Darwin)
+    STATIC_LIB_EXT  = .a
+    DYNAMIC_LIB_EXT = .so
+    OS              = "Darwin"
+    message         = @(echo \033[31m $1 \033[0;0m1)
+    Filter          = %/win32/%.d %/linux/%.d %/freebsd/%.d %/solaris/%.d
 endif
 
 # If compiler is not define try to find it
@@ -101,15 +51,15 @@ endif
 
 # Define flag for gdc other
 ifeq ($(DC),gdc)
-    DCFLAGS    = -O2 -fdeprecated
+    DCFLAGS    = -O
     LINKERFLAG= -Xlinker
     OUTPUT    = -o
-    HF        = -fintfc-file=
-    DF        = -fdoc-file=
-    NO_OBJ    = -fsyntax-only
-    DDOC_MACRO= -fdoc-inc=
+    HF        = -Hf
+    DF        = -Df
+    NO_OBJ    = -o-
+    DDOC_MACRO=
 else
-    DCFLAGS    = -O -d
+    DCFLAGS    = -O
     LINKERFLAG= -L
     OUTPUT    = -of
     HF        = -Hf
@@ -141,7 +91,7 @@ else ifeq ($(DC),ldc2)
     COMPILER    = ldc
     VERSION     = -d-version
     SONAME_FLAG = -soname
-    PHOBOS      = phobos-ldc
+    PHOBOS      = phobos2-ldc
     DRUNTIME    = druntime-ldc
 else ifeq ($(DC),ldmd)
     COMPILER    = ldc
@@ -152,55 +102,33 @@ else ifeq ($(DC),ldmd)
 else ifeq ($(DC),dmd)
     COMPILER    = dmd
     VERSION     = -version
-    SONAME_FLAG = $(LINKERFLAG)-soname
-    PHOBOS      = phobos2
+    SONAME_FLAG = $(LINKERFLAG)
+    PHOBOS      = libphobos2.so
     DRUNTIME    = druntime
 else ifeq ($(DC),dmd2)
     COMPILER    = dmd
     VERSION     = -d-version
-    SONAME_FLAG = $(LINKERFLAG)-soname
+    SONAME_FLAG = $(LINKERFLAG)
     PHOBOS      = phobos2
     DRUNTIME    = druntime
 endif
 
 # Define relocation model for ldc or other
 ifneq (,$(findstring ldc,$(DC)))
-    FPIC = -relocation-model=pic
+    FPIC = -fPIC
+else ifneq (,$(findstring gdc,$(DC)))
+    FPIC = -fPIC
 else
     FPIC = -fPIC
 endif
 
 # Add -ldl flag for linux
 ifeq ($(OS),"Linux")
-    LDCFLAGS += $(LINKERFLAG)-ldl
-endif
-
-# If model are not given take the same as current system
-ifndef ARCH
-    ifeq ($(OS),"Windows")
-        ifeq ($(PROCESSOR_ARCHITECTURE), x86)
-            ARCH = x86
-        else
-            ARCH = x86_64
-        endif
+    ifneq (,(findstring gdc,$(DC)))
+        LDCFLAGS += $(LINKERFLAG)
     else
-        ARCH = $(shell arch 2>/dev/null|| uname -m)
+        LDCFLAGS += $(LINKERFLAG)-ldl
     endif
-endif
-ifndef MODEL
-    ifeq ($(ARCH), x86_64)
-        MODEL = 64
-    else
-        MODEL = 32
-    endif
-endif
-
-ifeq ($(MODEL), 64)
-    DCFLAGS  += -m64
-    LDCFLAGS += -m64
-else
-    DCFLAGS  += -m32
-    LDCFLAGS += -m32
 endif
 
 ifndef DESTDIR
@@ -209,9 +137,7 @@ endif
 
 # Define var PREFIX, BIN_DIR, LIB_DIR, INCLUDE_DIR, DATA_DIR
 ifndef PREFIX
-    ifeq ($(OS),"Windows")
-        PREFIX = $(PROGRAMFILES)
-    else ifeq ($(OS), "Linux")
+    ifeq ($(OS), "Linux")
         PREFIX = /usr/local
     else ifeq ($(OS), "Darwin")
         PREFIX = /usr/local
@@ -219,47 +145,25 @@ ifndef PREFIX
 endif
 
 ifndef BIN_DIR
-    ifeq ($(OS), "Windows")
-        BIN_DIR = $(PROGRAMFILES)\$(PROJECT_NAME)\bin
-    else ifeq ($(OS), "Linux")
+    ifeq ($(OS), "Linux")
         BIN_DIR = $(PREFIX)/bin
     else ifeq ($(OS), "Darwin")
         BIN_DIR = $(PREFIX)/bin
     endif
 endif
+
 ifndef LIB_DIR
-    ifeq ($(OS), "Windows")
-        LIB_DIR = $(PREFIX)\$(PROJECT_NAME)\lib
-    else ifeq ($(OS), "Linux")
+    ifeq ($(OS), "Linux")
         LIB_DIR = $(PREFIX)/lib
     else ifeq ($(OS), "Darwin")
         LIB_DIR = $(PREFIX)/lib
     endif
 endif
 
-ifndef INCLUDE_DIR
-    ifeq ($(OS), "Windows")
-        INCLUDE_DIR = $(PROGRAMFILES)\$(PROJECT_NAME)\import
-    else
-        INCLUDE_DIR = $(PREFIX)/include/d
-    endif
-endif
 
-ifndef DATA_DIR
-    ifeq ($(OS), "Windows")
-        DATA_DIR = $(PROGRAMFILES)\$(PROJECT_NAME)\data
-    else
-        DATA_DIR = $(PREFIX)/share
-    endif
-endif
-
-ifndef PKGCONFIG_DIR
-    ifeq ($(OS), "Windows")
-        PKGCONFIG_DIR = $(PROGRAMFILES)\$(PROJECT_NAME)\data
-    else
-        PKGCONFIG_DIR = $(DATA_DIR)/pkgconfig
-    endif
-endif
+INCLUDE_DIR = $(PREFIX)/include/d
+DATA_DIR = $(PREFIX)/share
+PKGCONFIG_DIR = $(DATA_DIR)/pkgconfig
 
 ifndef CC
     CC = gcc
