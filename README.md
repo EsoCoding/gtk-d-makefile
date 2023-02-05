@@ -31,26 +31,29 @@ Anyone is free to help and contribute wether this is trough posting issues, addi
 | libshumate | shumate | libshumate is a C library providing a GtkWidget to display maps |
 
 ## Installation 
-To install gtk-d to your system, you need to install all the packages required dev version of the GObject packages that are included into Gtk-d. These dev versions have the gir files you need to generate the bindings. See next section for a repo with gir files for gtk-4.8.3, which can be used as long the packages are installed on the system.
+To install gtk-d to your system, you need to install all the required dev packages that are included into Gtk-d. These dev versions have the gir files you need to generate the bindings. See next section for a repo with gir files for gtk-4.8.3. If you use these, you still need to install the normal packages.
 
-You can install the project as you usually do with any other makefile project. The default options creates a shared library.
+You can install the project by runing a makefile as you usually do with any other makefile project. The default 'make' command creates a shared library and will install pregenerated gtk-4.8.3 bindings. 
 ````
 make
-make install
 ````
 
-If you want to compile and install the static Library dont forget to use the --use-runtime-linker flag when using girtod to generate the bindings.
+If you want to compile and install the static library then you will need to use girtod and generate the bindings yourself using the --use-runtime-linker flag. And then run make using 'static-all' command.
 ````
 make static-all
+````
+
+After make did compile the bindings, just run 'make instal' and you will have your gtk-d version installed:
+````
 make install
 ````
 
-There is also support for override veriables and install parts to different directorys:
+Like usual with makefiles you you can override variables and install parts to different directorys:
 ````
-make install PREFIX=/usr LIB_DIR=/usr/lib64
+make install PREFIX=/usr LIB_DIR=/usr/lib64 DC=[dmd, gdc, ldc, ldc2]
 ````
 
-For cleaning just run:
+For completly cleaning all generated files run:
 ````
 make clean
 ````
@@ -61,7 +64,7 @@ make uninstall
 ````
 
 ## Additional info
-To generate your own gtk bindings you need to install this version of [girtod](https://github.com/gtk-d/gir-to-d). Just run the makefile, meson or dub install. And then you can start generating the bindings with the following commands:
+To generate your own gtk bindings you need to install this version of [girtod](https://github.com/gtk-d/gir-to-d). Just run the makefile, meson or dub install method. And you can start generating the bindings with the following commands:
 
 For static bindings:
 ````
