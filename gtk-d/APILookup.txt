@@ -53,8 +53,8 @@ outputRoot: src
 ### predifined: lib
 ###########################################################
 
-#copy: cairo
-#copy: gtk
+copy: cairo
+copy: gtk
 copy: linker
 
 lookup: APILookupGLib.txt

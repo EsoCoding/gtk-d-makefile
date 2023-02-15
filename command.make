@@ -8,7 +8,7 @@ MV    = mv
 LN    = ln -s
 
 # find all the source code in root directory
-getSource       =$(shell find $(ROOT_SOURCE_DIR) -name "*.d")
+getSource = $(shell find $(ROOT_SOURCE_DIR) -name "*.d")
 
 ifeq ($(shell uname), Linux)
     OS              = "Linux"
